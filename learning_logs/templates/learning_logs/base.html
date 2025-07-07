@@ -1,5 +1,5 @@
 {% load bootstrap4 %}
- 
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,13 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1,
     shrink-to-fit=no">
   <title>Learning Log</title>
+      
   {% bootstrap_css %}
   {% bootstrap_javascript jquery='full' %}
+
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
     <a class="navbar-brand" href="{% url 'learning_logs:index'%}">
         Learning Log</a>
+             
     <button class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarCollapse" aria-controls="navbarCollapse"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -27,12 +30,14 @@
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
           <li class="nav-item">
-            <span class="navbar-text">Hello, {{ user.username }}.</span>
+            <span class="navbar-text"}">Hello, {{ user.username }}.</span>
           </li>
           <li class="nav-item">
             <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
               {% csrf_token %}
-              <button type="submit" class="nav-link btn btn-link p-0" style="border: none; background: none; color: rgba(0,0,0,.5);">Log out</button>
+              <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">
+                Log out
+              </button>
             </form>
           </li>
         {% else %}
@@ -43,9 +48,8 @@
             <a class="nav-link" href="{% url 'users:login' %}">Log in</a></li>
         {% endif %}
       </ul>
-     </div>
-  </nav>
-  
+    </div>
+</nav>
   <main role="main" class="container">
     <div class="pb-2 mb-2 border-bottom">
       {% block page_header %}{% endblock page_header %}
