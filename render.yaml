@@ -2,14 +2,12 @@ services:
   - type: web
     name: django-app
     runtime: python3
-    buildCommand: "./build.sh"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
     startCommand: "gunicorn learninglog.wsgi:application"
     plan: starter
     env:
       - key: PYTHON_VERSION
         value: "3.11"
-      - key: DJANGO_SETTINGS_MODULE
-        value: "learninglog.settings"
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
@@ -24,5 +22,3 @@ services:
   - type: pserv
     name: postgres-db
     plan: starter
-    databaseName: django_db
-    databaseUser: django_user
