@@ -1,5 +1,4 @@
 services:
-  # Web Service
   - type: web
     name: django-app
     runtime: python3
@@ -21,12 +20,9 @@ services:
         fromDatabase:
           name: postgres-db
           property: connectionString
-    
-  # PostgreSQL Database
+
   - type: pserv
     name: postgres-db
-    runtime: postgresql
     plan: starter
-    databases:
-      - name: django_db
-        user: django_user
+    databaseName: django_db
+    databaseUser: django_user
