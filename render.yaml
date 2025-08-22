@@ -21,11 +21,6 @@ services:
         fromDatabase:
           name: postgres-db
           property: connectionString
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: redis-cache
-          property: connectionString
     
   # PostgreSQL Database
   - type: pserv
@@ -35,41 +30,3 @@ services:
     databases:
       - name: django_db
         user: django_user
-    
-  # Redis Cache (optional)
-  - type: redis
-    name: redis-cache
-    plan: starter
-    
-  # Background Worker (optional - for Celery)
-  - type: worker
-    name: celery-worker
-    runtime: python3
-    buildCommand: "./build.sh"
-    startCommand: "celery -A learninglog worker --loglevel=info"
-    plan: starter
-    env:
-      - key: PYTHON_VERSION
-        value: "3.11"
-      - key: DJANGO_SETTINGS_MODULE
-        value: "learninglog.settings"
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DATABASE_URL
-        fromDatabase:
-          name: postgres-db
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: redis-cache
-          property: connectionString
-
-# Static Files (optional - if not using cloud storage)
-staticSites:
-  - name: django-static
-    staticPublishPath: ./staticfiles
-    buildCommand: "python manage.py collectstatic --noinput"
-    routes:
-      - src: "/static/*"
-        dest: "/*"
