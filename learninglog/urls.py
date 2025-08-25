@@ -17,19 +17,27 @@ Including another URLconf
 # learninglog/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse  # ← ADD THIS
-from django.contrib.auth.models import User  # ← ADD THIS
-import os  # ← ADD THIS
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+import os
 
-# ADD THIS FUNCTION
 def create_superuser(request):
-    # ... (the function code from above)
+    """Temporary view to create superuser"""
+    try:
+        if User.objects.filter(username='admin', is_superuser=True).exists():
+            return HttpResponse("Superuser already exists!")
+        
+        User.objects.create_superuser('admin', 'admin@example.com', 'changeme123!')
+        return HttpResponse("Superuser created successfully!")
+        
+    except Exception as e:
+        return HttpResponse(f"Error: {str(e)}")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('learning_logs.urls')),
-    path('users/', include('users.urls')),
+    path('', include('learning_logs.urls')),  # Make sure this matches your app name
+    path('users/', include('users.urls')),   # If you have a users app
     
-    # ADD THIS LINE
-    path('create-admin-user/', create_superuser, name='create_superuser'),
+    # Temporary URL
+    path('create-admin-user/', create_superuser),
 ]
