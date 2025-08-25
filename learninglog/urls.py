@@ -14,11 +14,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# learninglog/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse  # ← ADD THIS
+from django.contrib.auth.models import User  # ← ADD THIS
+import os  # ← ADD THIS
+
+# ADD THIS FUNCTION
+def create_superuser(request):
+    # ... (the function code from above)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),
     path('', include('learning_logs.urls')),
+    path('users/', include('users.urls')),
+    
+    # ADD THIS LINE
+    path('create-admin-user/', create_superuser, name='create_superuser'),
 ]
