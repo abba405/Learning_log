@@ -27,7 +27,7 @@ def create_superuser(request):
         if User.objects.filter(username='admin', is_superuser=True).exists():
             return HttpResponse("Superuser already exists!")
         
-        User.objects.create_superuser('admin', 'admin@example.com', 'changeme123!')
+        User.objects.create_superuser('Abba', 'zakariyaibrahim3551@gmail.com', '07065743551Zaks@')
         return HttpResponse("Superuser created successfully!")
         
     except Exception as e:
